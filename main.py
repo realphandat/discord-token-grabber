@@ -11,6 +11,8 @@ class color:
 
 def start():
 	token = "".join(choices(string, k = 26)) + "." + "".join(choices(string, k = 6)) + "." + "".join(choices(string, k = 38))
+	if token[0] == "-" or token[0] == "_":
+		return
 	res = get('https://discord.com/api/v9/users/@me', headers = {'Authorization': token})
 	if res.status_code == 200:
 		print(f"{color.green}[VALID]{color.reset} - {token}")
